@@ -1,3 +1,7 @@
+# intellij
+/.idea/
+/.gradle/
+
 # Compiled class file
 *.class
 
