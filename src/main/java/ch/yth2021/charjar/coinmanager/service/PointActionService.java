@@ -14,12 +14,20 @@ public class PointActionService {
     private BalanceRepository balanceRepository;
 
     public List<Balance> getBalances() {
-        balanceRepository.save(Balance.builder().balance(2).userId("mock").build());
         return balanceRepository.findAll();
     }
 
     public Balance changeBalance(String userId, BalanceAction action) {
-        return null;
+        var balance = balanceRepository.findByUserId(userId);
+        switch (action.getAction()) {
+            case ADD:
+                balance.setBalance(balance.getBalance() + action.getAmount());
+                break;
+            case SUBTRACT:
+                balance.setBalance(balance.getBalance() - action.getAmount());
+                break;
+        }
+        return balanceRepository.save(balance);
     }
 
     public Balance getBalance(String userId) {

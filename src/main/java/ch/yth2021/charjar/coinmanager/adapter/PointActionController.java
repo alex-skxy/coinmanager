@@ -14,10 +14,15 @@ import java.util.List;
 public class PointActionController {
     private PointActionService pointActionService;
 
+    @GetMapping("/debug")
+    public List<Balance> getBalances(@PathVariable("userId") String userId) {
+        return pointActionService.getBalances();
+    }
+
 
     @GetMapping()
-    public List<Balance> getBalance(@PathVariable("userId") String userId) {
-        return pointActionService.getBalances();
+    public Balance getBalance(@PathVariable("userId") String userId) {
+        return pointActionService.getBalance(userId);
     }
 
     @PostMapping()
