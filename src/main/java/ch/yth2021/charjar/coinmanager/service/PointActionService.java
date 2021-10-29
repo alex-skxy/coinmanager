@@ -14,6 +14,7 @@ public class PointActionService {
     private BalanceRepository balanceRepository;
 
     public List<Balance> getBalances() {
+        balanceRepository.save(Balance.builder().balance(2).userId("mock").build());
         return balanceRepository.findAll();
     }
 

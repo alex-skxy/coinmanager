@@ -16,8 +16,8 @@ public class PointActionController {
 
 
     @GetMapping()
-    public Balance getBalance(@PathVariable("userId") String userId) {
-        return pointActionService.getBalance(userId);
+    public List<Balance> getBalance(@PathVariable("userId") String userId) {
+        return pointActionService.getBalances();
     }
 
     @PostMapping()
