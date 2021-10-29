@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Builder
-@Document("balance")
+@Document
 public class Balance {
     @Id
     private String id;

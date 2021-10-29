@@ -5,6 +5,8 @@ import ch.yth2021.charjar.coinmanager.entity.BalanceAction;
 import ch.yth2021.charjar.coinmanager.repository.BalanceRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -13,24 +15,26 @@ import java.util.List;
 public class PointActionService {
     private BalanceRepository balanceRepository;
 
-    public List<Balance> getBalances() {
+    public Flux<Balance> getBalances() {
         return balanceRepository.findAll();
     }
 
-    public Balance changeBalance(String userId, BalanceAction action) {
-        var balance = balanceRepository.findByUserId(userId);
-        switch (action.getAction()) {
-            case ADD:
-                balance.setBalance(balance.getBalance() + action.getAmount());
-                break;
-            case SUBTRACT:
-                balance.setBalance(balance.getBalance() - action.getAmount());
-                break;
-        }
-        return balanceRepository.save(balance);
+    public Mono<Balance> changeBalance(String userId, BalanceAction action) {
+
+        return balanceRepository.findByUserId(userId).map(b -> {
+            switch (action.getAction()) {
+                case ADD:
+                    b.setBalance(b.getBalance() + action.getAmount());
+                    break;
+                case SUBTRACT:
+                    b.setBalance(b.getBalance() - action.getAmount());
+                    break;
+            }
+            return b;
+        }).flatMap(balanceRepository::save);
     }
 
-    public Balance getBalance(String userId) {
+    public Mono<Balance> getBalance(String userId) {
         return balanceRepository.findByUserId(userId);
     }
 }
