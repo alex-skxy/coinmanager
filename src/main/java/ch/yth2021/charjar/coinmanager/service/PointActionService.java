@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 @AllArgsConstructor
 public class PointActionService {
     private BalanceRepository balanceRepository;
-    private final Integer DEFAULT_POINTS = 0;
+    private final Integer DEFAULT_POINTS = 10;
 
     public Flux<Balance> getBalances() {
         return balanceRepository.findAll();
