@@ -4,6 +4,7 @@ import ch.yth2021.charjar.coinmanager.entity.Balance;
 import ch.yth2021.charjar.coinmanager.entity.BalanceAction;
 import ch.yth2021.charjar.coinmanager.service.PointActionService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -21,8 +22,8 @@ public class PointActionController {
 
 
     @GetMapping()
-    public Mono<Balance> getBalance(@PathVariable("userId") String userId) {
-        return pointActionService.getBalance(userId);
+    public Mono<ResponseEntity<Balance>> getBalance(@PathVariable("userId") String userId) {
+        return pointActionService.getBalance(userId).map(b -> ResponseEntity.ok().body(b)).switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
     }
 
     @PostMapping()
