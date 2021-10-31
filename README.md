@@ -1,5 +1,7 @@
 # coinmanager
 
+made for the 2021 UMB Young Talents Hackathon as a part of our CharJar Discord Bot Project. Check it out here: https://github.com/DeNic0la/jda-discord-bot-starter
+
 # HOW-TO-START-THE-APPLICATION for dummies
 
 1. make sure u've got docker installed
@@ -12,3 +14,4 @@
 # Endpoints
 
 GET `/users/{userId}/points`: get the users current balance
+POST `/users/{userId}/points`: add or subtract points from user. body: { "action": "ADD" | "SUBTRACT", "amount": number }
